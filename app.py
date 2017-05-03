@@ -1,6 +1,24 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
+from flask import request, json
+import Pandas as pd
+import numpy
+from Pandas import DataFrame
 
 app = Flask(__name__)
+
+@app.route('/',methods=['POST'])
+def recommend():
+ 
+    # read the posted values from the UI
+    _userid = request.form['UserID']
+    print(_userid)
+ 
+    # validate the received values
+    if _userid:
+    	return render_template('index.html', recommendations=['ads', 'dsa', '123'])
+        #return json.dumps({'html':'<span>All fields good !!</span>'})
+    else:
+        return json.dumps({'html':'<span>Enter the required fields</span>'})
 
 @app.route("/")
 def main():

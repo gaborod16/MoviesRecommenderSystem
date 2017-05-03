@@ -3,12 +3,13 @@
  
 <head>
     <title>Python Recommendation System</title>
- 
- 
+    <meta charset="UTF-8">
+
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
  
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  
 </head>
  
@@ -25,18 +26,20 @@
             <h1>Movies Recommender!</h1>
             <hr>
             <br>
-            <form action="index_submit" method="get" accept-charset="utf-8">
+            <form action="/" method="POST" accept-charset="utf-8">
                 <p>
-                    <input type="text" name="UserID" value="" placeholder="UserID">
+                    <input type="text" id="UserID" name="UserID" value="" placeholder="UserID" autofocus required>
                 </p>
             	<p>
-                    <a id="btnRecommend" href="recommend" class="btn btn-lg btn-primary">Get Recommendation</a>    
+                    <input type="submit" name="btnRecommend" class="btn btn-lg btn-primary" value="Get Recommendation">   
                 </p>
             </form>
         </div>
  
         <div class="row marketing">
-            
+            {% for r in recommendations %}
+                <p>{{ r }}</p>
+            {% endfor %}
         </div>
  
         <footer class="footer">
@@ -44,6 +47,8 @@
         </footer>
  
     </div>
+
+    <script type="text/javascript" src="javascript.js"></script>
 </body>
  
 </html>
