@@ -3,22 +3,33 @@ Recommender System for movies, based on reviews and adapted to each user.
 
 ## Setup:
 
-For running this project you will need Python installed and the following libraries:
+1. For running this project you will need Python install the dependancies first:
 
-* Flask
-* Pandas 
-* Numpy 
-* Pickle
+	```
+	pip install -r requirements.txt
+	```
 
-After installing flask, open the command line (or Anaconda) and go to the folder where the project is stored.
+	After installing flask, open the command line (or Anaconda) and go to the folder where the project is stored.
 
-To created the support files, execute the script for that purpose: python data_science.py
+2. To created the support files (download and uncompress the `movies.txt.gz` from the implementation notes link), execute the script for that purpose.
 
-After its conclusion, run: python app.py 
-The server will start.
+	```
+	python data_science.py
+	```
 
-Open your browser and go to: http://localhost:5000/
-By this momment, the Movies Recommender System should be already running.
+3. After its conclusion, run:
+
+	```
+	python app.py
+	```
+
+	The server will start.
+
+	Open your browser and go to: http://localhost:5000/
+
+	By this moment, the Movies Recommender System should be already running. 
+	
+	Type `A1RSDE90N6RSZF` as a demo `UserID`.
 
 ## Notes of the implementation:
 
