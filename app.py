@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask import request, json
 import Pandas as pd
 import numpy
-from Pandas import DataFrame
+from data_science import get_recommendations, get_top_50, test_func
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ def recommend():
  
     # validate the received values
     if _userid:
-    	return render_template('index.html', recommendations=['ads', 'dsa', '123'])
+    	return render_template('index.html', recommendations=['ads', 'dsa', '123', test_func])
         #return json.dumps({'html':'<span>All fields good !!</span>'})
     else:
         return json.dumps({'html':'<span>Enter the required fields</span>'})

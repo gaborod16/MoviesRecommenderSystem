@@ -2,22 +2,83 @@ import pandas as pd
 import numpy
 from pandas import DataFrame
 from datetime import datetime
-import os
+import pickle
 
-
+def test_func():
+    return "test succedeed!"
 
 def import_data():
     data = pd.DataFrame()
     data = pd.read_csv(open("./movies.csv", 'r'), delimiter=';')
     return data
 
-def transform_data(data):
-    review_length = []
+def create_users_and_movies_files(data):
+    users = {}
+    movies = {}
+    movies_rate = {}
+    max_year = data.Novelty.max()
+    data.Novelty = data.Novelty.apply(lambda x: max_year - x + 1)
+    data.ReviewImpact = data.ReviewImpact.apply(lambda x: x / 50)
 
-    for idx in range(1,len(data)):
-        review_length.append( len(data.VAL[idx]) )
-    data['LENGTH'] = review_length
-    return data
+    for tup in data.itertuples():
+        if tup.UserID not in users:
+            users[tup.UserID] = []
+        if tup.MovieID not in movies:
+            movies[tup.MovieID] = []
+            df_movie = data[data.MovieID == tup.MovieID]
+            df_movie.rate = ((df_movie.Score * df_movie.Helpfulness) / (df_movie.Novelty * 2)) + df_movie.ReviewImpact
+            movies_rate[tup.MovieID] = df_movie.rate.mean()
+
+        users[tup.UserID].append(tup.MovieID)
+        movies[tup.MovieID].append(tup.UserID)
+
+    with open('users.txt', 'wb') as handle:
+        pickle.dump(users, handle)
+
+    with open('movies.txt', 'wb') as handle:
+        pickle.dump(movies, handle)
+
+    with open('movies_rate.txt', 'wb') as handle:
+        pickle.dump(movies_rate, handle)
+
+def get_recommendations(userID):
+    with open('users.txt', 'rb') as handle:
+        users = pickle.loads(handle.read())
+
+    with open('movies.txt', 'rb') as handle:
+        movies = pickle.loads(handle.read())
+
+    with open('movies_rate.txt', 'rb') as handle:
+        movies_rate = pickle.loads(handle.read())
+
+    recommended_movies = []
+    reviewed_movies = users[userID]
+
+    for m in reviewed_movies:
+        reviewed_by = movies[m]
+        for u in reviewed_by:
+            others_reviews = users[u]
+            for rm in others_reviews:
+                if rm not in reviewed_movies and rm not in recommended_movies:
+                    recommended_movies.append(rm)
+
+    sort_func = get_movie_rating(movies_rate)
+    recommended_movies = sorted(recommended_movies, sort_func, reverse=True)
+    return recommended_movies
+
+def get_movie_rating(movies_rate):
+    def get_movie_rating_(movie):
+        return movies_rate[movie]
+    return get_movie_rating_
+
+def get_top_50():
+    with open('movies_rate.txt', 'rb') as handle:
+        movies_rate = pickle.loads(handle.read())
+
+    sort_func = get_movie_rating(movies_rate)
+    moviesID = [m for m in movies_rate]
+    moviesID = sorted(moviesID, sort_func, reverse=True)
+    return moviesID[1:51]
 
 def create_simplified_file():
     header = ["MovieID;", "UserID;", "Helpfulness;", "Score;", "Novelty;", "ReviewImpact\n"]
@@ -82,6 +143,12 @@ def create_simplified_file():
     fr.close()
 
 def main():
+    # create_simplified_file()
+    data = import_data ()
+    create_users_and_movies_files(data)
+    # print(get_recommendations('A141HP4LYPWMSR'))
+    print(get_top_50())
+    print("Done!")
 
 
 if __name__ == "__main__":
