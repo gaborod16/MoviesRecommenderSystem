@@ -143,11 +143,11 @@ def create_simplified_file():
     fr.close()
 
 def main():
-    # create_simplified_file()
+    create_simplified_file()
     data = import_data ()
     create_users_and_movies_files(data)
     # print(get_recommendations('A141HP4LYPWMSR'))
-    print(get_top_50())
+    # print(get_top_50())
     print("Done!")
 
 

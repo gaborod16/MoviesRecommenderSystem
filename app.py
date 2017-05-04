@@ -15,7 +15,7 @@ def recommend():
  
     # validate the received values
     if _userid:
-    	return render_template('index.html', recommendations=['ads', 'dsa', '123', test_func])
+    	return render_template('index.html', recommendations=get_recommendations(_userid))
         #return json.dumps({'html':'<span>All fields good !!</span>'})
     else:
         return json.dumps({'html':'<span>Enter the required fields</span>'})
