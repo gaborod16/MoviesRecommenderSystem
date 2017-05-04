@@ -36,9 +36,12 @@
             </form>
         </div>
  
-        <div class="row marketing">
+        <div class="row marketing text-center">
+            <h2>Top 10 recommendations</h2>
             {% for r in recommendations %}
-                <p>{{ r }}</p>
+                <div class="col-lg-6">
+                    <p>Rank {{ loop.index }}: {{ r }}</p>
+                </div>
             {% endfor %}
         </div>
  
@@ -47,8 +50,6 @@
         </footer>
  
     </div>
-
-    <script type="text/javascript" src="javascript.js"></script>
 </body>
  
 </html>

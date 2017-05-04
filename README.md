@@ -12,7 +12,9 @@ For running this project you will need Python installed and the following librar
 
 After installing flask, open the command line (or Anaconda) and go to the folder where the project is stored.
 
-Then run: python app.py 
+To created the support files, execute the script for that purpose: python data_science.py
+
+After its conclusion, run: python app.py 
 The server will start.
 
 Open your browser and go to: http://localhost:5000/

@@ -1,8 +1,7 @@
 from flask import Flask, render_template
 from flask import request, json
-import Pandas as pd
 import numpy
-from data_science import get_recommendations, get_top_50, test_func
+from data_science import get_recommendations, get_top_50
 
 app = Flask(__name__)
 
